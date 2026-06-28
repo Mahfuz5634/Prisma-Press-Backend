@@ -1,13 +1,8 @@
 import { prisma } from "../../lib/prisma";
 import config from "../../config";
 import bcrypt from "bcrypt";
+import { RegisterUserPlayload } from "./user.interface";
 
-interface RegisterUserPlayload{
-    name:string;
-    email:string;
-    password:string;
-    profilePhoto?:string
-}
 
 const registeUserIntoDb=async (playload:RegisterUserPlayload)=>{
      const {name,email,password,profilePhoto}=playload
