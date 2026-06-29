@@ -30,7 +30,6 @@ const  getMyProfile= catchAsync( async (req: Request, res: Response, next: NextF
     console.log(accessToken);
 
     const verifiedToken = jwtUtils.verifyToken(accessToken,config.jwt_access_secret!)
-    console.log(verifiedToken);
 
     if(typeof verifiedToken==="string"){
         throw new Error(verifiedToken);
