@@ -10,7 +10,7 @@ router.get("/",auth(Role.USER, Role.ADMIN),postController.getAllPosts);
 router.get("/stats",postController.getPostStats);
 router.get("/my-posts",auth(Role.USER, Role.ADMIN),postController.getMyPost);
 router.get("/:postId",postController.getPostById);
-router.patch("/:postId",postController.updatePost);
-router.delete("/:postId",postController.deletePost);
+router.patch("/:postId",auth(Role.USER, Role.ADMIN),postController.updatePost);
+router.delete("/:postId",auth(Role.USER, Role.ADMIN),postController.deletePost);
 
 export const postRoutes = router;
