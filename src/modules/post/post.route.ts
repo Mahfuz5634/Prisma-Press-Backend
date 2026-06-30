@@ -8,7 +8,7 @@ const router=Router();
 router.post("/", auth(Role.USER, Role.ADMIN), postController.createPost);
 router.get("/",auth(Role.USER, Role.ADMIN),postController.getAllPosts);
 router.get("/stats",postController.getPostStats);
-router.get("/my-posts",postController.getMyPost);
+router.get("/my-posts",auth(Role.USER, Role.ADMIN),postController.getMyPost);
 router.get("/:postId",postController.getPostById);
 router.patch("/:postId",postController.updatePost);
 router.delete("/:postId",postController.deletePost);

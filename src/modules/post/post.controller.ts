@@ -46,15 +46,37 @@ const getMyProfile=catchAsync( async(req:Request, res:Response,next:NextFunction
 })
 
 const getMyPost=catchAsync( async(req:Request, res:Response,next:NextFunction)=>{
+      const authorId= req.user?.id;
+
+      const result= await postService.getMyPost(authorId as string);
+      
+      sendResponse(res,{
+        success:true,
+        statusCode:HttpStatus.OK,
+        message:"My post retrive succesfully",
+        data:result
+    })
+
 
 })
 
 const getPostById=catchAsync( async(req:Request, res:Response,next:NextFunction)=>{
+    const postId = req.params.postId;
+    if(!postId){
+        throw new Error("post id required")
+    }
 
+    const result = await postService.getPostById(postId as string);
+     sendResponse(res,{
+        success:true,
+        statusCode:HttpStatus.OK,
+        message:"post retrive succesfully",
+        data:result
+    })
 })
 
 const updatePost=catchAsync( async(req:Request, res:Response,next:NextFunction)=>{
-
+         
 })
 
 const deletePost=catchAsync( async(req:Request, res:Response,next:NextFunction)=>{

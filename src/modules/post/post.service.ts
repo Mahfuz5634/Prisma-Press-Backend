@@ -39,12 +39,58 @@ const getMyProfile=( )=>{
 
 }
 
-const getMyPost=()=>{
-
+const getMyPost=async (authorId:string)=>{
+    const result = await prisma.post.findMany({
+        where:{
+            authorId
+        },
+        orderBy:{
+            createdAt:"desc"
+        },
+        include:{
+            comments:true,
+            author:{
+                omit:{
+                    password:true
+                }
+            },
+            
+                _count:{
+                    select:{
+                        comments:true
+                    }
+                }
+            
+        }
+    })
+    return result;
 }
 
-const getPostById=()=>{
-
+const getPostById= async(postId:string)=>{
+   const post = await prisma.post.findUniqueOrThrow({
+    where:{
+        id:postId
+    }
+   })
+   const updatePost =  await prisma.post.update({
+    where:{
+        id:postId
+    },
+    data:{
+        views:{
+            increment:1
+        }
+    },
+    include:{
+        author:{
+            omit:{
+                password:true
+            }
+        },
+        comments:true
+    }
+   })
+   return updatePost;
 }
 
 const updatePost=()=>{
@@ -61,5 +107,7 @@ export const postService={
     getPostStats,
     getPostById,
     updatePost,
-    deletePost
+    deletePost,
+    getMyPost,
+    getMyProfile
 }
